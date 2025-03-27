@@ -14,4 +14,7 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  preview: {
+    allowedHosts: ['capstone-team5-e9fb565bc66e.herokuapp.com'], // Allow Heroku domain
+  },
 });
