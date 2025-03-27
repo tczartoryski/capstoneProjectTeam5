@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, CircularProgress } from '@mui/material';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { database } from './firebaseConfig'; // Ensure firebaseConfig initializes Firestore
 import { format } from 'date-fns'; // Install date-fns for formatting timestamps
 import './styles/App.css';
@@ -17,8 +17,11 @@ const App: React.FC = () => {
     useEffect(() => {
         const imagesCollection = collection(database, 'images'); // Reference to 'images' collection
 
+        // Query to order documents by timestamp in descending order
+        const imagesQuery = query(imagesCollection, orderBy('timestamp', 'desc'));
+
         // Set up a real-time listener
-        const unsubscribe = onSnapshot(imagesCollection, (snapshot) => {
+        const unsubscribe = onSnapshot(imagesQuery, (snapshot) => {
             const imageData = snapshot.docs.map((doc) => ({
                 url: doc.data().url,
                 timestamp: doc.data().timestamp?.toDate(), // Convert Firestore timestamp to JS Date
