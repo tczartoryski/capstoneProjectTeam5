@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "start": "vite preview",
+    "heroku-postbuild": "vite build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
