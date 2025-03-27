@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "start": "vite preview",
+    "start": "vite preview --port $PORT --host",
     "heroku-postbuild": "vite build"
   },
   "dependencies": {
