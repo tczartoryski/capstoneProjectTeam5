@@ -109,3 +109,25 @@ def serve_react_app(path):
     if path and os.path.exists(os.path.join(app.static_folder, path)):
         return send_from_directory(app.static_folder, path)
     return send_from_directory(app.static_folder, "index.html")
+
+
+# Function to delete all images from Firestore
+def delete_all_images():
+    collection_ref = db.collection(collection_name)
+    docs = collection_ref.stream()
+
+    for doc in docs:
+        print(f"Deleting document {doc.id}...")
+        doc.reference.delete()
+
+    print("All documents in the 'images' collection have been deleted.")
+
+
+# Route to handle DELETE requests
+@app.route("/images", methods=["DELETE"])
+def delete_images():
+    try:
+        delete_all_images()
+        return jsonify({"message": "All images have been deleted successfully."}), 200
+    except Exception as e:
+        return jsonify({"error": f"Failed to delete images: {str(e)}"}), 500
