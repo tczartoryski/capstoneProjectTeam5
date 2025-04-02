@@ -6,7 +6,19 @@ import firebase_admin
 from firebase_admin import credentials, firestore, storage
 
 # Load Firebase credentials from environment variable
-service_account_info = json.loads(os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON"))
+# Let's say you loaded the one-liner string from an env variable or a file
+raw_json_str = os.getenv("GOOGLE_CREDENTIALS_JSON")
+
+# Convert it back to proper dictionary
+service_account_info = json.loads(raw_json_str)
+
+# Fix the private key by replacing escaped newlines with real ones
+service_account_info["private_key"] = service_account_info["private_key"].replace(
+    "\\n", "\n"
+)
+
+# Now initialize
+cred = credentials.Certificate(service_account_info)
 cred = credentials.Certificate(service_account_info)
 firebase_admin.initialize_app(
     cred,
