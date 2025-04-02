@@ -5,6 +5,7 @@ from datetime import datetime
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
 
+# Load Firebase credentials from environment variable
 service_account_info = json.loads(os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON"))
 cred = credentials.Certificate(service_account_info)
 firebase_admin.initialize_app(
@@ -17,7 +18,7 @@ db = firestore.client()
 bucket = storage.bucket()
 
 # Flask app
-app = Flask(__name__, static_folder="vite-react-app/dist")
+app = Flask(__name__, static_folder="../frontend/dist")
 
 # Firestore collection name
 collection_name = "images"

@@ -7,7 +7,7 @@
     "build": "vite build",
     "serve": "vite preview",
     "start": "vite preview --port $PORT --host",
-    "heroku-postbuild": "vite build"
+    "heroku-postbuild": "npm install && npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
