@@ -48,7 +48,7 @@ const App: React.FC = () => {
 
     // Effect to handle the 1-second delay for showing the composite image
     useEffect(() => {
-        if (images.length === 2) {
+        if (images.length === 11) {
             const timer = setTimeout(() => {
                 setShowComposite(true); // Show the composite image after 1 second
             }, 2000);
