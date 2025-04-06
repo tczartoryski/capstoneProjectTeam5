@@ -3,6 +3,7 @@ import { Container, Typography, Box, CircularProgress } from '@mui/material';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { database } from './firebaseConfig'; // Ensure firebaseConfig initializes Firestore
 import { format } from 'date-fns'; // Install date-fns for formatting timestamps
+import stitched from './stitchedAndFused.jpg';
 import './styles/App.css';
 
 interface ImageData {
@@ -57,6 +58,31 @@ const App: React.FC = () => {
                 </Typography>
             ) : (
                 <Box>
+                    {images.length === 2 && (
+                        <Box
+                            style={{
+                                marginBottom: '20px',
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+                                borderRadius: '16px', // Rounded corners for the container
+                                overflow: 'hidden', // Ensure child elements respect the border radius
+                                padding: '10px',
+                                backgroundColor: '#fff', // Add a background color for better contrast
+                            }}
+                        >
+                            <Typography variant="h4" style={{ marginBottom: '5px' }}>
+                                Composite Image: <span style={{ color: 'red', fontWeight: 'bold' }}>2 MINES DETECTED !!!</span>
+                            </Typography>
+                            <img
+                                src={stitched}
+                                style={{
+                                    width: '100%',
+                                    height: 'auto',
+                                    maxHeight: '200px',
+                                    objectFit: 'contain',
+                                }}
+                            />
+                        </Box>
+                    )}
                     {images.map((image, index) => (
                         <Box
                             key={index}
