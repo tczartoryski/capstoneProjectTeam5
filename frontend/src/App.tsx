@@ -17,6 +17,7 @@ interface ImageData {
 const App: React.FC = () => {
     const [images, setImages] = useState<ImageData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [showComposite, setShowComposite] = useState<boolean>(false); // State to control composite image display
 
     useEffect(() => {
         const imagesCollection = collection(database, 'images'); // Reference to 'images' collection
@@ -45,6 +46,19 @@ const App: React.FC = () => {
         return () => unsubscribe();
     }, []);
 
+    // Effect to handle the 1-second delay for showing the composite image
+    useEffect(() => {
+        if (images.length === 2) {
+            const timer = setTimeout(() => {
+                setShowComposite(true); // Show the composite image after 1 second
+            }, 2000);
+
+            return () => clearTimeout(timer); // Cleanup the timer on unmount or when images change
+        } else {
+            setShowComposite(false); // Hide the composite image if the condition is not met
+        }
+    }, [images]);
+
     return (
         <Container maxWidth="md" style={{ textAlign: 'center', marginTop: '20px' }}>
             <Typography variant="h3" gutterBottom>
@@ -58,7 +72,7 @@ const App: React.FC = () => {
                 </Typography>
             ) : (
                 <Box>
-                    {images.length === 2 && (
+                    {showComposite && ( // Only show the composite image after the delay
                         <Box
                             style={{
                                 marginBottom: '20px',
@@ -77,8 +91,8 @@ const App: React.FC = () => {
                                 style={{
                                     width: '100%',
                                     height: 'auto',
-                                    maxHeight: '200px',
-                                    objectFit: 'contain',
+                                    maxHeight: '400px', // Increased maxHeight to make the image larger
+                                    objectFit: 'contain', // Ensures the image scales proportionally
                                 }}
                             />
                         </Box>
